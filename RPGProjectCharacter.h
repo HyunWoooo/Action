@@ -73,6 +73,7 @@ public:
 
 	virtual void WeaponAttack() override;
 
+	TArray<FString> Inventory;
 
 	// 키를 누르면 스프린트 플래그를 설정합니다.
 	UFUNCTION()
@@ -89,6 +90,15 @@ public:
 	// 키를 떼면 스프린트 플래그를 지웁니다.
 	UFUNCTION()
 	void StopBlock();
+
+	// 키를 누르면 픽업 플래그를 설정합니다.
+	void BeginPickUp();
+
+	// 키를 누르면 픽업 플래그를 지웁니다.
+	void EndPickUp();
+
+	// 키를 누르면 인벤토리 플래그를 설정합니다.
+	void ShowInventory();
 
 	UFUNCTION(BlueprintCallable, Category = "MyBasic|State")
 	bool IsSprint();
@@ -110,6 +120,8 @@ public:
 	
 	bool bSprint;
 	bool bBlock;
+
+	bool bIsPickingUp;
 
 	float Initailstamina;
 	float Currentstamina;

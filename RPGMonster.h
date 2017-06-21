@@ -59,6 +59,9 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Health")
 	float Getcurrenthealth();
 
+	UPROPERTY(EditDefaultsOnly, Category = Weapon)
+	TSubclassOf<class AItem> ItemClass;
+
 private:
 
 	bool bAttacking;

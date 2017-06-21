@@ -5,6 +5,7 @@
 #include "RPGProjectCharacter.h"
 #include "RPGMonster.h"
 #include "SimpleEffect.h"
+#include "Engine.h"
 
 //////////////////////////////////////////////////////////////////////////
 // ARPGProjectCharacter
@@ -96,6 +97,11 @@ void ARPGProjectCharacter::SetupPlayerInputComponent(class UInputComponent* Play
 	// "Block" 바인딩을 구성합니다.
 	InputComponent->BindAction("Block", IE_Pressed, this, &ARPGProjectCharacter::StartBlock);
 	InputComponent->BindAction("Block", IE_Released, this, &ARPGProjectCharacter::StopBlock);
+
+	InputComponent->BindAction("PickUp", IE_Pressed, this, &ARPGProjectCharacter::BeginPickUp);
+	InputComponent->BindAction("PickUp", IE_Released, this, &ARPGProjectCharacter::EndPickUp);
+
+	InputComponent->BindAction("Inventory", IE_Pressed, this, &ARPGProjectCharacter::ShowInventory);
 }
 
 void ARPGProjectCharacter::Tick(const float deltaTime)
@@ -217,6 +223,23 @@ void ARPGProjectCharacter::StopBlock()
 	bUseControllerRotationRoll = false;
 }
 
+void ARPGProjectCharacter::BeginPickUp()
+{
+	bIsPickingUp = true;
+}
+
+void ARPGProjectCharacter::EndPickUp()
+{
+	bIsPickingUp = false;
+}
+
+void ARPGProjectCharacter::ShowInventory()
+{
+	for (auto& item : Inventory)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Item: %s"), *item));
+	}
+}
 
 bool ARPGProjectCharacter::IsSprint()
 {

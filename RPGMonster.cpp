@@ -4,6 +4,7 @@
 #include "RPGMonster.h"
 #include "RPGProjectCharacter.h"
 #include "TrollAIController.h"
+#include "Item.h"
 
 
 // Sets default values
@@ -115,6 +116,14 @@ void ARPGMonster::Die(float KillingDamage, FDamageEvent const & DamageEvent, ACo
 
 	FTimerHandle TimerHandle;
 	GetWorldTimerManager().SetTimer(TimerHandle, this, &ARPGMonster::OnDieAnimationEnd, DeathAnimDuration, false);
+
+	FActorSpawnParameters SpawnInfo;
+
+	UWorld* const World = GetWorld(); // get a reference to the world
+	if (World) {
+		// if world exists
+		AItem* AttackEppect = World->SpawnActor<AItem>(ItemClass, GetActorLocation(), GetActorRotation(), SpawnInfo);
+	}
 }
 
 void ARPGMonster::OnDieAnimationEnd()
